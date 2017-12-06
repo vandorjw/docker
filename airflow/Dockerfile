@@ -1,11 +1,11 @@
-# VERSION 1.8.1-1
-# AUTHOR: Matthieu "Puckel_" Roisil
-# DESCRIPTION: Basic Airflow container
-# BUILD: docker build --rm -t puckel/docker-airflow .
-# SOURCE: https://github.com/puckel/docker-airflow
+# VERSION 1.8.2-1
+# AUTHOR: HubbaBT
+# DESCRIPTION: Airflow container
+# BUILD: docker build --rm -t hubbadev/docker-airflow .
+# SOURCE: https://github.com/hubbabd/docker/tree/master/airflow
 
 FROM python:3.6-slim
-MAINTAINER Puckel_
+MAINTAINER hubbabd
 
 # Never prompts the user for choices on installation/configuration of packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -34,7 +34,7 @@ RUN set -ex \
         libblas-dev \
         liblapack-dev \
         libpq-dev \
-        git \
+		libmysqlclient-dev \
     ' \
     && apt-get update -yqq \
     && apt-get install -yqq --no-install-recommends \
@@ -45,6 +45,7 @@ RUN set -ex \
         curl \
         netcat \
         locales \
+		git \
     && sed -i 's/^# en_US.UTF-8 UTF-8$/en_US.UTF-8 UTF-8/g' /etc/locale.gen \
     && locale-gen \
     && update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 \
@@ -55,8 +56,8 @@ RUN set -ex \
     && pip install pyOpenSSL \
     && pip install ndg-httpsclient \
     && pip install pyasn1 \
-    && pip install apache-airflow[crypto,celery,postgres,hive,jdbc]==$AIRFLOW_VERSION \
-    && pip install celery[redis]==3.1.17 \
+    && pip install "apache-airflow[async, devel, celery, crypto, druid, gcp_api, jdbc, hdfs, hive, kerberos, ldap, password, postgres, qds, s3, samba, slack]"==$AIRFLOW_VERSION \
+    && pip install celery[redis]==3.1.17\
     && apt-get purge --auto-remove -yqq $buildDeps \
     && apt-get clean \
     && rm -rf \
@@ -67,8 +68,8 @@ RUN set -ex \
         /usr/share/doc \
         /usr/share/doc-base
 
-COPY script/entrypoint.sh /entrypoint.sh
-COPY config/airflow.cfg ${AIRFLOW_HOME}/airflow.cfg
+COPY entrypoint.sh /entrypoint.sh
+COPY airflow.cfg ${AIRFLOW_HOME}/airflow.cfg
 
 RUN chown -R airflow: ${AIRFLOW_HOME}
 
