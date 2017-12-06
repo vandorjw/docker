@@ -1,11 +1,4 @@
-# VERSION 1.8.2-1
-# AUTHOR: HubbaBT
-# DESCRIPTION: Airflow container
-# BUILD: docker build --rm -t hubbadev/docker-airflow .
-# SOURCE: https://github.com/hubbabd/docker/tree/master/airflow
-
 FROM python:3.6-slim
-MAINTAINER hubbabd
 
 # Never prompts the user for choices on installation/configuration of packages
 ENV DEBIAN_FRONTEND noninteractive
@@ -56,7 +49,7 @@ RUN set -ex \
     && pip install pyOpenSSL \
     && pip install ndg-httpsclient \
     && pip install pyasn1 \
-    && pip install "apache-airflow[async, devel, celery, crypto, druid, gcp_api, jdbc, hdfs, hive, kerberos, ldap, password, postgres, qds, s3, samba, slack]"==$AIRFLOW_VERSION \
+    && pip install "apache-airflow[async, devel, celery, crypto, password, postgres, s3]"==$AIRFLOW_VERSION \
     && pip install celery[redis]==3.1.17\
     && apt-get purge --auto-remove -yqq $buildDeps \
     && apt-get clean \
