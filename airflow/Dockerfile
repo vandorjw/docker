@@ -46,6 +46,7 @@ RUN set -ex \
     && python -m pip install -U pip setuptools wheel \
     && pip install Cython \
     && pip install pytz \
+    && pip install slackclient \
     && pip install pyOpenSSL \
     && pip install ndg-httpsclient \
     && pip install pyasn1 \
