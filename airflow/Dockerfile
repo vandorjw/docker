@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV TERM linux
 
 # Airflow
-ARG AIRFLOW_VERSION=1.8.1
+ARG AIRFLOW_VERSION=1.8.0
 ARG AIRFLOW_HOME=/usr/local/airflow
 
 # Define en_US.
@@ -50,7 +50,8 @@ RUN set -ex \
     && pip install pyOpenSSL \
     && pip install ndg-httpsclient \
     && pip install pyasn1 \
-    && pip install "apache-airflow[async, devel, celery, crypto, password, postgres, s3]"==$AIRFLOW_VERSION \
+    # UNCOMMENT FOR AIRFLOW VERSIONS LATER THAN 1.8.0 && pip install "apache-airflow[async, devel, celery, crypto, password, postgres, s3]"==$AIRFLOW_VERSION \
+    && pip install "airflow[async, devel, celery, crypto, password, postgres, s3]"==$AIRFLOW_VERSION \
     && pip install celery[redis]==3.1.17\
     && apt-get purge --auto-remove -yqq $buildDeps \
     && apt-get clean \
