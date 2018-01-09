@@ -17,7 +17,7 @@ TRY_LOOP="20"
 : ${FERNET_KEY:=$(python -c "from cryptography.fernet import Fernet; FERNET_KEY = Fernet.generate_key().decode(); print(FERNET_KEY)")}
 
 # source mounted environment (secrets)
-echo "[ENTRYPOINT] - sourcing secrets"
+echo "[ENTRYPOINT] - sourcing secrets - using public entrypoint"
 set -a
 . /secrets/manual
 
