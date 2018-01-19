@@ -48,7 +48,9 @@ RUN set -ex \
     && pip install Cython \
     && pip install pytz \
     && pip install slackclient \
-    && pip install pyOpenSSL \
+    && pip install requests[security]==2.7.0 \
+    && pip install cryptography==1.9 \
+    && pip install pyOpenSSL==17.4.0 \
     && pip install ndg-httpsclient \
     && pip install pyasn1 \
     && pip install "apache-airflow[async, devel, celery, crypto, password, postgres, s3]"==$AIRFLOW_VERSION \
