@@ -1,6 +1,7 @@
 FROM openjdk:8u151-jre-slim
 
-ENV PRESTO_HOME=/presto \
+ENV PRESTO_SOURCE_PATH=https://repo1.maven.org/maven2/com/facebook/presto \
+    PRESTO_HOME=/presto \
     PRESTO_VERSION=0.195 \
     PRESTODB_COORDINATOR=false \
     PRESTODB_SERVER_PORT=8080 \
@@ -18,9 +19,9 @@ RUN apt-get update \
 	&& apt-get install -y less
 
 # Download Presto
-RUN wget https://repo1.maven.org/maven2/com/facebook/presto/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz \
-  https://repo1.maven.org/maven2/com/facebook/presto/presto-cli/${PRESTO_VERSION}/presto-cli-${PRESTO_VERSION}-executable.jar \
-  https://repo1.maven.org/maven2/com/facebook/presto/presto-jdbc/${PRESTO_VERSION}/presto-jdbc-${PRESTO_VERSION}.jar \
+RUN wget ${PRESTO_SOURCE_PATH}/presto-server/${PRESTO_VERSION}/presto-server-${PRESTO_VERSION}.tar.gz \
+  ${PRESTO_SOURCE_PATH}/presto-cli/${PRESTO_VERSION}/presto-cli-${PRESTO_VERSION}-executable.jar \
+  ${PRESTO_SOURCE_PATH}/presto-jdbc/${PRESTO_VERSION}/presto-jdbc-${PRESTO_VERSION}.jar \
 #		${BASE_URL}/presto-verifier/${PRESTO_VERSION}/presto-verifier-${PRESTO_VERSION}-executable.jar \
 #		${BASE_URL}/presto-benchmark-driver/${PRESTO_VERSION}/presto-benchmark-driver-${PRESTO_VERSION}-executable.jar \
 	&& rm -rf /var/lib/apt/lists/*
